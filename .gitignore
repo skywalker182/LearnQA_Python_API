@@ -1,4 +1,6 @@
-
+.idea/
+.pytest_cache
+__pycache__/
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/LearnQA_Python_API.iml
 .idea/misc.xml
