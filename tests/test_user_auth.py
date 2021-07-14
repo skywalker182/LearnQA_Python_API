@@ -2,6 +2,7 @@ import requests
 from lib.Assertions import Assertions
 from lib.BaseCase import BaseCase
 
+
 class TestUserAuth(BaseCase):
     exclude_params = [
         ("no_cookie"),
@@ -31,5 +32,4 @@ class TestUserAuth(BaseCase):
             "user_id",
             self.user_id_from_auth_method,
             "User id from auth method is not equal to user from check method"
-            )
-
+        )

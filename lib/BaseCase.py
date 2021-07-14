@@ -1,4 +1,7 @@
+import string
+from datetime import datetime
 import json.decoder
+import random
 
 from requests import Response
 
@@ -19,3 +22,24 @@ class BaseCase:
             assert False, f"Response is not in JSON, response text is {response.text}"
         assert name in response_as_dict, f"response text doesn't have key '{name}'"
         return response_as_dict[name]
+
+    def prepare_registration_data(self, email=None, username='learnqa', firstname='learnqa', lastname='leanqa'):
+        if email is None:
+            base_part = "learnqa"
+            domain = "example.com"
+            random_part = datetime.now().strftime("%m%d%%Y%H%M%S")
+            email = f"{base_part}{random_part}@{domain}"
+        return {
+            "password": '1232',
+            'username': username,
+            'firstName': firstname,
+            'lastName': lastname,
+            'email': email
+        }
+
+    def get_random_string(length):
+        # choose from all lowercase letter
+        letters = string.ascii_lowercase
+        result_str = ''.join(random.choice(letters) for i in range(length))
+        return result_str
+
