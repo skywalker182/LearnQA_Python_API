@@ -17,8 +17,6 @@ class TestUserAuth(BaseCase):
             'password': '1234'
         }
         response1 = requests.post(url=self.url1, data=data)
-        print(response1.cookies)
-        print(response1.text)
         self.user_id_from_auth_method = self.get_json_value(response1, "user_id")
 
     def test_user_auth(self):
