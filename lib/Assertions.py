@@ -13,7 +13,6 @@ class Assertions:
         assert name in response_as_dict, f"response text doesn't have key '{name}'"
         assert response_as_dict[name] == expected_value, error_message
 
-
     @staticmethod
     def assert_json_has_key(response: Response, name):
         try:
@@ -40,7 +39,6 @@ class Assertions:
         for name in names:
             assert name not in response_as_dict, f"response text shouldn't have key '{name}', but key is present"
 
-
     @staticmethod
     def assert_code_status(response: Response, expected_status_code):
         assert response.status_code == expected_status_code, \
@@ -58,3 +56,4 @@ class Assertions:
     def assert_response_text(response: Response, expected_text):
         assert response.text == expected_text, \
             f"Unexpected response text! Expected: {expected_text}. Actual: {response.text}"
+
