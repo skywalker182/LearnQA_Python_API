@@ -26,15 +26,14 @@ class TestUserEdit(BaseCase):
             'email': email,
             'password': password
         }
-        response2 = MyRequests(url=login_url, data=login_data)
+        response2 = MyRequests.post(url=login_url, data=login_data)
         auth_sid = self.get_cookie(response2, 'auth_sid')
         token = self.get_header(response2, 'x-csrf-token')
 
         # Edit
         new_name = "changedName"
-        new_url = user_url + "/" + str(user_id)
         response3 = MyRequests.put(
-            new_url,
+            user_url + f'/{user_id}',
             headers={'x-csrf-token': token},
             cookies={'auth_sid': auth_sid},
             data={'firstName': new_name}
@@ -44,7 +43,7 @@ class TestUserEdit(BaseCase):
 
         # Get
         response4 = MyRequests.get(
-            new_url,
+            user_url + f'/{user_id}',
             headers={'x-csrf-token': token},
             cookies={'auth_sid': auth_sid}
         )
@@ -56,7 +55,7 @@ class TestUserEdit(BaseCase):
             "Wrong name of user after edit"
         )
 
-    def test_edit_just_created_user_too_incorrect_email(self):
+    def test_edit_just_created_user_with_incorrect_email(self):
         # Register
         register_data = self.prepare_registration_data()
         response1 = MyRequests.post(user_url, data=register_data)
@@ -80,9 +79,8 @@ class TestUserEdit(BaseCase):
 
         # Edit
         new_email = "changedemail"
-        new_url = user_url + "/" + str(user_id)
         response3 = MyRequests.put(
-            new_url,
+            user_url + f'/{user_id}',
             headers={'x-csrf-token': token},
             cookies={'auth_sid': auth_sid},
             data={'email': new_email}
@@ -115,9 +113,8 @@ class TestUserEdit(BaseCase):
 
         # Edit
         new_name = "c"
-        new_url = user_url + str(user_id)
         response3 = MyRequests.put(
-            new_url,
+            user_url + f'/{user_id}',
             headers={'x-csrf-token': token},
             cookies={'auth_sid': auth_sid},
             data={'firstName': new_name}
@@ -141,9 +138,8 @@ class TestUserEdit(BaseCase):
 
         # Edit
         new_name = "changedName"
-        new_url = user_url + str(user_id)
         response3 = MyRequests.put(
-            new_url,
+            user_url + f'/{user_id}',
             data={'firstName': new_name}
         )
 
@@ -159,6 +155,7 @@ class TestUserEdit(BaseCase):
         Assertions.assert_json_has_key(response1, "id")
 
         user_id = self.get_json_value(response1, "id")
+        user_original_username = register_data1['username']
 
         # Register #2
         register_data2 = self.prepare_registration_data()
@@ -181,9 +178,8 @@ class TestUserEdit(BaseCase):
 
         # Edit
         new_name = "changedName"
-        new_url = user_url + str(user_id)
         response3 = MyRequests.put(
-            new_url,
+            user_url + f'/{user_id}',
             headers={'x-csrf-token': token},
             cookies={'auth_sid': auth_sid},
             data={'username': new_name}
@@ -193,13 +189,14 @@ class TestUserEdit(BaseCase):
 
         # Get
         response4 = MyRequests.get(
-            new_url,
+            user_url + f'/{user_id}',
             headers={'x-csrf-token': token},
             cookies={'auth_sid': auth_sid}
         )
+        # проверка, что username не поменялся
         Assertions.assert_json_value_by_name(
             response4,
             "username",
-            new_name,
+            user_original_username,
             "Wrong name of user after edit"
         )
