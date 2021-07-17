@@ -3,8 +3,8 @@ from lib.BaseCase import BaseCase
 from lib.Assertions import Assertions
 from lib.my_requests import MyRequests
 
-url = '/api/user'
-url_for_login = '/api/user/login'
+url = '/user'
+url_for_login = '/user/login'
 expected_fields = ['email', 'firstName', 'lastName']
 
 

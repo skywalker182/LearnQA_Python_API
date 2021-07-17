@@ -3,8 +3,8 @@ from lib.BaseCase import BaseCase
 from lib.Assertions import Assertions
 from lib.my_requests import MyRequests
 
-login_url = '/api/user/login'
-user_url = '/api/user'
+login_url = '/user/login'
+user_url = '/user'
 
 
 class TestUserEdit(BaseCase):
